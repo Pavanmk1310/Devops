@@ -1,4 +1,4 @@
-name: Vite React Crowdfunding CI/CD
+name: Vite React Crowdfunding CI/CD with Ansible & Firebase
 
 on:
   push:
@@ -7,8 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,18 +22,29 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Run tests
+    - name: Run tests (if present)
       run: npm run test --if-present
 
-    - name: Build project
+    - name: Build Vite project
       run: npm run build
 
-    # OPTIONAL: Deploy step (example with Firebase Hosting)
-    # Uncomment and set up secrets if you're using Firebase
+    # ---- Ansible Section (Post-build automation) ----
+    - name: Install Ansible
+      run: |
+        sudo apt update
+        sudo apt install -y ansible
 
-    # - name: Deploy to Firebase Hosting
-    #   uses: w9jds/firebase-action@v13.0.1
-    #   with:
-    #     args: deploy --only hosting
-    #   env:
-    #     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+    - name: Run Ansible Playbook
+      run: |
+        ansible-playbook deploy/deploy.yml
+      # Optional: Add this if you're using an inventory file or secrets
+      # env:
+      #   SOME_SECRET: ${{ secrets.SOME_SECRET }}
+
+    # ---- Firebase Deployment ----
+    - name: Deploy to Firebase Hosting
+      uses: w9jds/firebase-action@v13.0.1
+      with:
+        args: deploy --only hosting
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
