@@ -1,0 +1,40 @@
+name: Vite React Crowdfunding CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run tests
+      run: npm run test --if-present
+
+    - name: Build project
+      run: npm run build
+
+    # OPTIONAL: Deploy step (example with Firebase Hosting)
+    # Uncomment and set up secrets if you're using Firebase
+
+    # - name: Deploy to Firebase Hosting
+    #   uses: w9jds/firebase-action@v13.0.1
+    #   with:
+    #     args: deploy --only hosting
+    #   env:
+    #     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
