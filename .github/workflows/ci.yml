@@ -39,6 +39,18 @@ jobs:
         ansible-playbook deploy/deploy.yml
       # env:
       #   SOME_SECRET: ${{ secrets.SOME_SECRET }}
+          # ---- SonarCloud Analysis ----
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@v2
+      with:
+        args: >
+          -Dsonar.projectKey=Pavankm1310_Devops
+          -Dsonar.organization=pavankm1310
+          -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # automatically provided by GitHub Actions
+
 
     # ---- Firebase Deployment ----
     - name: Deploy to Firebase Hosting
