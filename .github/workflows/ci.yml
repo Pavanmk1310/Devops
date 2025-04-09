@@ -35,22 +35,20 @@ jobs:
         sudo apt install -y ansible
 
     - name: Run Ansible Playbook
-      run: |
-        ansible-playbook deploy/deploy.yml
+      run: ansible-playbook deploy/deploy.yml
       # env:
       #   SOME_SECRET: ${{ secrets.SOME_SECRET }}
-          # ---- SonarCloud Analysis ----
+
+    # ---- SonarCloud Analysis ----
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@master
       with:
         args: >
-            -Dsonar.projectKey=Pavanmk1310_Devops
-            -Dsonar.organization=pavanmk1310
-            -Dsonar.sources=src
-  env:
-    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-
+          -Dsonar.projectKey=Pavanmk1310_Devops
+          -Dsonar.organization=pavanmk1310
+          -Dsonar.sources=src
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
     # ---- Firebase Deployment ----
     - name: Deploy to Firebase Hosting
@@ -59,5 +57,4 @@ jobs:
         args: deploy --only hosting
       env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        PROJECT_PATH: .  # 👈 Ensures firebase.json is found
-
+        PROJECT_PATH: .
