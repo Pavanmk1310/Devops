@@ -37,7 +37,6 @@ jobs:
     - name: Run Ansible Playbook
       run: |
         ansible-playbook deploy/deploy.yml
-      # Optional: Add this if you're using an inventory file or secrets
       # env:
       #   SOME_SECRET: ${{ secrets.SOME_SECRET }}
 
@@ -48,3 +47,5 @@ jobs:
         args: deploy --only hosting
       env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        PROJECT_PATH: .  # 👈 Ensures firebase.json is found
+
