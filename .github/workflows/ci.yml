@@ -41,15 +41,15 @@ jobs:
       #   SOME_SECRET: ${{ secrets.SOME_SECRET }}
           # ---- SonarCloud Analysis ----
     - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@v2
+      uses: SonarSource/sonarcloud-github-action@master
       with:
         args: >
-          -Dsonar.projectKey=Pavankm1310_Devops
-          -Dsonar.organization=pavankm1310
-          -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # automatically provided by GitHub Actions
+            -Dsonar.projectKey=Pavanmk1310_Devops
+            -Dsonar.organization=pavanmk1310
+            -Dsonar.sources=src
+  env:
+    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
 
 
     # ---- Firebase Deployment ----
